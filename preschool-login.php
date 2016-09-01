@@ -1,10 +1,15 @@
 <?php
 /**
- * Plugin Name:       Custom Login
- * Description:       A plugin that replaces the WordPress login flow with a custom page.
- * Version:           1.0.0
+ * Plugin Name:       Preschool Login
+ * Description:       Preschool custom login plugin. Matching the website overal theme. It creates two additional pages: sign in and my account.
+ * Version:           1.8.5
  * Author:            Jobayer Arman
- * Text Domain:       custom-login
+ * Author URI:        https://jobayerarman.github.io
+ * Text Domain:       preschool-login
+ */
+
+ /**
+ * @link http://code.tutsplus.com/tutorials/build-a-custom-wordpress-user-flow-part-1-replace-the-login-page--cms-23627
  */
 
 class Custom_Login_Plugin {
@@ -39,11 +44,11 @@ class Custom_Login_Plugin {
         // Information needed for creating the plugin's pages
         $page_definitions = array(
             'member-login'   => array(
-                'title'          => __( 'Sign In', 'custom-login' ),
+                'title'          => __( 'Sign In', 'preschool-login' ),
                 'content'        => '[custom-login-form]'
             ),
             'member-account' => array(
-                'title'          => __( 'Your Account', 'custom-login' ),
+                'title'          => __( 'Your Account', 'preschool-login' ),
                 'content'        => '[account-info]'
             ),
         );
@@ -173,7 +178,7 @@ class Custom_Login_Plugin {
         $attributes = shortcode_atts( $default_attributes, $attributes );
 
         if ( is_user_logged_in() ) {
-            return __( 'You are already signed in.', 'custom-login' );
+            return __( 'You are already signed in.', 'preschool-login' );
         }
         // Pass the redirect parameter to the WordPress login functionality: by default,
         // don't specify a redirect, but if a valid redirect URL has been passed as
@@ -209,9 +214,8 @@ class Custom_Login_Plugin {
         // Parse shortcode attributes
         $default_attributes = array( 'show_title' => false );
         $attributes = shortcode_atts( $default_attributes, $attributes );
-        if ( is_user_logged_in() ) {
-            return $this->get_template_html( 'user_account', $attributes );
-        }
+
+        return $this->get_template_html( 'user_account', $attributes );
     }
 
     /**
@@ -277,24 +281,24 @@ class Custom_Login_Plugin {
         switch ( $error_code ) {
             // Login errors
             case 'empty_username':
-                return __( 'You do have an email address, right?', 'custom-login' );
+                return __( 'You do have an email address, right?', 'preschool-login' );
             case 'empty_password':
-                return __( 'You need to enter a password to login.', 'custom-login' );
+                return __( 'You need to enter a password to login.', 'preschool-login' );
             case 'invalid_username':
                 return __(
                     "We don't have any user with that email address or username. Maybe you used a different one when signing up?",
-                    'custom-login'
+                    'preschool-login'
                 );
             case 'incorrect_password':
                 $err = __(
                     "The password you entered wasn't quite right. <a href='%s'>Did you forget your password</a>?",
-                    'custom-login'
+                    'preschool-login'
                 );
                 return sprintf( $err, wp_lostpassword_url() );
             default:
                 break;
         }
-        return __( 'An unknown error occurred. Please try again later.', 'custom-login' );
+        return __( 'An unknown error occurred. Please try again later.', 'preschool-login' );
     }
 }
 
